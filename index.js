@@ -78,8 +78,9 @@ module.exports = class {
 
 				res.set(`Set-Cookie`, `SID=${sid}; path=${path}; Max-Age=${maxAge}`);
 				return true;
-			} catch {
-				console.log(`cookie collision`);
+			} catch (error) {
+				if (error.code === 11000)
+					console.log(`cookie collision`);
 			}
 		}
 	}
