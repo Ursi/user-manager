@@ -31,11 +31,11 @@ module.exports = class {
 	//	return this.users.insertOne(fields);
 	//}
 
-	create(pass, fail) {
+	create(pass, fail, extra) {
 		return async (req, res) => {
 			req.body.password = await bcrypt.hash(req.body.password, 10);
 			try {
-				await this.users.insertOne(req.body);
+				await this.users.insertOne({...req.body, ...extra});
 				await this.session(res, req.body._id);
 				res.redirect(pass);
 			} catch {
